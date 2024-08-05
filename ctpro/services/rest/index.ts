@@ -1,15 +1,15 @@
-import { ApiResponse, ITipyPost } from "@/types";
-import { HttpClient } from "./http-client";
-import { API_ENDPOINTS } from "./api-endpoint";
+import { ApiResponse, ITipyPost } from '@/types';
+import { HttpClient } from './http-client';
+import { API_ENDPOINTS } from './api-endpoint';
+import axios from 'axios';
 
-class Client{
- typi = {
-    all: ()=>{
-        HttpClient.get<ApiResponse<ITipyPost[]>>(
-            API_ENDPOINTS.GET_ALL_TIPY_POST
-        )
-        }
-    }
+class Client {
+  typi = {
+    all: () => {
+        
+      axios.get<ITipyPost[]>("https://jsonplaceholder.typicode.com/posts");
+    },
+  };
 }
 
 const client = new Client();

@@ -69,6 +69,7 @@ export default axiosInstance;
 export class HttpClient {
   static async get<T>(url: string, params?: unknown) {
     const response = await axiosInstance.get<T>(url, { params });
+    console.log(url, response);
     return response.data;
   }
 
