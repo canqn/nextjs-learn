@@ -10,7 +10,9 @@ type Post = {
   body: string;
 };
 const fetchPosts = async (limit = 10): Promise<Array<Post>> => {
-  const response = await axios.get('https://jsonplaceholder.typicode.com/posts');
+  const response = await axios.get(
+    'https://jsonplaceholder.typicode.com/posts'
+  );
   const data = await response.data;
   return data.filter((x: Post) => x.id <= limit);
 };

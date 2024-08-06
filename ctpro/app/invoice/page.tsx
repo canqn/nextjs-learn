@@ -25,8 +25,8 @@ export default function Invoice() {
     <>
       <Header />
       <main className="container pt-20">
-        <Coupon/>
-        <section  className='posts mt-10'>
+        <Coupon />
+        <section className="posts mt-10">
           <ul>
             {console.log(data)}
             {data?.map((post, index) => (

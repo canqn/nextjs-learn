@@ -1,16 +1,16 @@
 // lib/axios.js
 import axios from 'axios';
 
-const axiosInstance = axios.create({
-  baseURL: process.env.NEXT_PUBLIC_REST_API_ENDPOINT, // Thay thế bằng URL API của bạn
-  timeout: 10000, // Thời gian chờ (ms)
+const invoiceInstance = axios.create({
+  baseURL: "https://hoadondientu.gdt.gov.vn:30000", // Thay thế bằng URL API của bạn
+  timeout: 50000, // Thời gian chờ (ms)
   headers: {
     'Content-Type': 'application/json',
   },
 });
 
 // Thêm Interceptors cho request nếu cần thiết
-axiosInstance.interceptors.request.use(
+invoiceInstance.interceptors.request.use(
   (config) => {
     // Xử lý trước khi gửi request (ví dụ: thêm token vào headers)
     return config;
@@ -21,7 +21,7 @@ axiosInstance.interceptors.request.use(
 );
 
 // Thêm Interceptors cho response
-axiosInstance.interceptors.response.use(
+invoiceInstance.interceptors.response.use(
   (response) => {
     // Xử lý response thành công
     return response;
@@ -64,27 +64,27 @@ axiosInstance.interceptors.response.use(
   }
 );
 
-export default axiosInstance;
+export default invoiceInstance;
 
-export class HttpClient {
+export class InvoiceClient {
   static async get<T>(url: string, params?: unknown) {
-    const response = await axiosInstance.get<T>(url, { params });
-    console.log(url, response);
+    const response = await invoiceInstance.get<T>(url, { params });
+    console.log(url, response.data);
     return response.data;
   }
 
   static async post<T>(url: string, data: unknown, options?: any) {
-    const response = await axiosInstance.post<T>(url, data, options);
+    const response = await invoiceInstance.post<T>(url, data, options);
     return response.data;
   }
 
   static async put<T>(url: string, data: unknown) {
-    const response = await axiosInstance.put<T>(url, data);
+    const response = await invoiceInstance.put<T>(url, data);
     return response.data;
   }
 
   static async delete<T>(url: string) {
-    const response = await axiosInstance.delete<T>(url);
+    const response = await invoiceInstance.delete<T>(url);
     return response.data;
   }
 }

@@ -11,3 +11,8 @@ export type ApiResponse<T> = {
   message: string;
   pagination: 3;
 };
+
+interface ICaptcha{
+  content: string;
+  key: string;
+}
