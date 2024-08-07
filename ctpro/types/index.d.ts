@@ -12,7 +12,25 @@ export type ApiResponse<T> = {
   pagination: 3;
 };
 
-interface ICaptcha{
+export interface ICaptcha {
   content: string;
   key: string;
+};
+
+export interface IInvoiceProfile {
+  id: string;
+  username: string;
+  name: string;
+  password: string;
+}
+
+export interface IAuthenticatedInvoice {
+  token: string;
+}
+
+export interface IUserLoginInvoiceOptions {
+  username: string;
+  password: string;
+  cvalue: string;
+  ckey: string;
 }

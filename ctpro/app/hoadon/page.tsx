@@ -9,32 +9,55 @@ import {
   FormMessage,
   FormField,
 } from '@/components/ui/form';
+import { 
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+  DialogFooter,
+} from '@/components/ui/dialog';
 import { Input } from '@/components/ui/input';
 import React, { useState } from 'react';
 import { Controller, useForm, SubmitHandler } from 'react-hook-form';
 //import { DatePicker } from '@/components/ui/datepicker'
 import { Button } from '@/components/ui/button';
 import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
-import { useCaptcha, useProfile } from '@/services/invoice';
+import { useCaptcha, useLogin, useProfile } from '@/services/invoice';
+import { IUserLoginInvoiceOptions } from '@/types';
 
 interface IFormInput {
   action: 'buy' | 'sell';
-  startDate: Date;
-  endDate: Date;
-  invoiceType: string;
-  firstName: string;
-  lastName: string;
-  age: number;
+  username: string;
+  password: string;
 }
 
 function HoDonPage() {
   const [startDate, setStartDate] = useState(new Date());
   const [endDate, setEndDate] = useState(new Date());
-  const { captcha, isLoading, error } = useCaptcha();
-  const onSubmit: SubmitHandler<IFormInput> = (data) => {
-    
-  };
+  const [showCaptchaModal, setShowCaptchaModal] = useState(false);
+  const [captchaValue, setCaptchaValue] = useState('');
+  const { captcha, isLoading, error, refetch } = useCaptcha({showCaptchaModal});
+  const { mutate, isLoading: isLoginLoading, error: loginError } = useLogin();
+  const [loginData, setLoginData] = useState<IUserLoginInvoiceOptions>({
+    username: '',
+    password: '',
+    cvalue: '',
+    ckey: '',
+  });
+
   const form = useForm();
+  const onSubmit: SubmitHandler<IFormInput> = (data) => {
+    setShowCaptchaModal(true);
+    refetch();
+    mutate(loginData);
+  };
+  const handleLogin = () => {
+    // Here you would typically validate the captcha and perform the login
+    console.log('Logging in with:', form.getValues(), 'Captcha:', captchaValue);
+    setShowCaptchaModal(false);
+    // Perform actual login logic here
+  };
+  
   return (
     <Layout>
       <div>
@@ -81,9 +104,6 @@ function HoDonPage() {
                     <FormControl>
                       <Input placeholder="Nhâp tên đăng nhâp" {...field} />
                     </FormControl>
-                    {/* <FormDescription>
-                This is your public display name.
-              </FormDescription> */}
                     <FormMessage />
                   </FormItem>
                 )}
@@ -110,10 +130,37 @@ function HoDonPage() {
       </div>
 
       <div>
-      <h1>Captcha Data</h1>
-      <pre>{captcha.key}</pre>
-      
-    </div>
+        <h1>Captcha Data</h1>
+        <pre>{captcha?.key}</pre>
+      </div>
+      <Dialog open={showCaptchaModal} onOpenChange={setShowCaptchaModal}>
+        <DialogContent>
+          <DialogHeader>
+            <DialogTitle>Nhập Captcha</DialogTitle>
+          </DialogHeader>
+          <div className="grid gap-4 py-4">
+            <div className="grid grid-cols-4 items-center gap-4">
+              {isLoading ? (
+                <div>Loading...</div>
+              ) : error ? (
+                <div>Error loading captcha</div>
+              ) : (
+                <div className="col-span-4" dangerouslySetInnerHTML={{ __html: captcha?.content }} />
+              )}
+              <Input
+                id="captcha"
+                className="col-span-4"
+                value={captchaValue}
+                onChange={(e) => setCaptchaValue(e.target.value)}
+                placeholder="Nhập mã captcha"
+              />
+            </div>
+          </div>
+          <DialogFooter>
+            <Button onClick={handleLogin}>Đăng nhập</Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
     </Layout>
   );
 }

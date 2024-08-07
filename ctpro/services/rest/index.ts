@@ -1,4 +1,4 @@
-import { ApiResponse, ITipyPost, ICaptcha } from '@/types';
+import { ApiResponse, ITipyPost, ICaptcha, ILoginInvoice, IAuthenticatedInvoice, IUserLoginInvoiceOptions } from '@/types';
 import { HttpClient } from './http-client';
 import { API_ENDPOINTS } from './api-endpoint';
 import axios from 'axios';
@@ -17,7 +17,16 @@ class Client {
       return res; // Trả về kết quả từ InvoiceClient.get
     },
 
-    login: () => {},
+    login: async(options: IUserLoginInvoiceOptions) => {
+      const data = await InvoiceClient.post<ILoginInvoice>(API_ENDPOINTS.LOGIN_INVOICE, {
+        options
+      })
+      return data;
+    },
+    loginUser: async (options: IUserLoginInvoiceOptions)=> {
+      const response = await InvoiceClient.post(API_ENDPOINTS.LOGIN_INVOICE, options);
+      return response;
+    }
   };
 }
 

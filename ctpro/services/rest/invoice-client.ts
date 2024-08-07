@@ -2,7 +2,7 @@
 import axios from 'axios';
 
 const invoiceInstance = axios.create({
-  baseURL: "https://hoadondientu.gdt.gov.vn:30000", // Thay thế bằng URL API của bạn
+  baseURL: 'https://hoadondientu.gdt.gov.vn:30000', // Thay thế bằng URL API của bạn
   timeout: 50000, // Thời gian chờ (ms)
   headers: {
     'Content-Type': 'application/json',
