@@ -3,6 +3,7 @@ import { useMutation, UseMutationResult, useQuery } from '@tanstack/react-query'
 import { API_ENDPOINTS } from './rest/api-endpoint';
 import client from './rest';
 import { IAuthenticatedInvoice, ICaptcha, IUserLoginInvoiceOptions } from '@/types';
+import Cookies from 'js-cookie'
 import invoiceInstance from './rest/invoice-client';
 import axios from 'axios';
 import { useState } from 'react';
@@ -53,6 +54,7 @@ export const useLogin = () => {
     onSuccess: (data, variables, context) => {
       // Handle the successful mutation
       localStorage.setItem('jwt', data.token);
+      Cookies.set('jwt', data.token);
       console.log('Login successful', data);
     },
     onSettled: (data, error, variables, context) => {

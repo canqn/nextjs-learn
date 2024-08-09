@@ -39,8 +39,8 @@ function HoDonPage() {
   const { captcha, isLoading, error, refetch } = useCaptcha({showCaptchaModal});
   const { mutate, isLoading: isLoginLoading, error: loginError } = useLogin();
   const [loginData, setLoginData] = useState<IUserLoginInvoiceOptions>({
-    username: '',
-    password: '',
+    username: '0315722954',
+    password: 'Atl1234567@',
     cvalue: '',
     ckey: '',
   });
@@ -49,13 +49,22 @@ function HoDonPage() {
   const onSubmit: SubmitHandler<IFormInput> = (data) => {
     setShowCaptchaModal(true);
     refetch();
-    mutate(loginData);
+   
   };
+  
   const handleLogin = () => {
-    // Here you would typically validate the captcha and perform the login
-    console.log('Logging in with:', form.getValues(), 'Captcha:', captchaValue);
+     // Update loginData with captcha information
+     const updatedLoginData = {
+      ...loginData,
+      cvalue: captchaValue,
+      ckey: captcha?.key || ''
+    };
+    
+    console.log('Logging in with:', updatedLoginData);
     setShowCaptchaModal(false);
+    
     // Perform actual login logic here
+    mutate(updatedLoginData);
   };
   
   return (
