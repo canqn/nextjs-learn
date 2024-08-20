@@ -24,6 +24,7 @@ import { Button } from '@/components/ui/button';
 import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
 import { useCaptcha, useLogin, useProfile } from '@/services/invoice';
 import { IUserLoginInvoiceOptions } from '@/types';
+import { DatePickerDemo } from './parts/datepicker';
 
 interface IFormInput {
   action: 'buy' | 'sell';
@@ -70,6 +71,9 @@ function HoDonPage() {
   return (
     <Layout>
       <div>
+        <div className='w-500'>
+        <DatePickerDemo />
+        </div>
         <Form {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
             <div className="flex items-center gap-3">

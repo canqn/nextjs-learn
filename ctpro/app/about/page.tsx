@@ -1,7 +1,7 @@
 'use client';
 import { Button } from '@/components/ui/button';
 import Link from 'next/link';
-import { usePathname } from 'next/navigation';
+import { usePathname, useSearchParams } from 'next/navigation';
 import {
   Accordion,
   AccordionContent,
@@ -11,6 +11,9 @@ import {
 
 export default function About() {
   const pathname = usePathname();
+  const params = useSearchParams();
+  const activeParam = params.get('about');
+
 
   return (
     <main className="flex min-h-screen flex-col items-center justify-between p-24">
@@ -33,20 +36,20 @@ export default function About() {
             >
               <AccordionTrigger>
                 <div className="flex w-full items-center gap-2.5 text-sm font-semibold">
-                  My booking
+                  My booking - {pathname}
                 </div>
               </AccordionTrigger>
               <AccordionContent>
                 <div className="flex w-full flex-col gap-2.5 text-sm font-semibold">
                   <Link
-                    href="/about"
-                    className={`flex gap-2 px-5 py-2.5 ${pathname === '/about' ? 'text-blue-500' : ''}`}
+                    href="/about/hotel"
+                    className={`flex gap-2 px-5 py-2.5 ${pathname === '/about/hotel' ? 'text-blue-500' : ''}`}
                   >
                     HOTEL
                   </Link>
                   <Link
-                    href="/hotels/bookings/flight"
-                    className={`flex gap-2 px-5 py-2.5 ${pathname === '/hotels/bookings/flight' ? 'text-blue-500' : ''}`}
+                    href="/about/flight"
+                    className={`flex gap-2 px-5 py-2.5 ${pathname === '/about/flight' ? 'text-blue-500' : ''}`}
                   >
                     FLIGHT
                   </Link>

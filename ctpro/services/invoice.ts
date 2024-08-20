@@ -22,7 +22,7 @@ export const useCaptcha = ({ isLoggedIn }: { isLoggedIn: boolean }) => {
     enabled: isLoggedIn,
   });
 
-  console.log(res?.key);
+  //console.log(res?.key);
   return {
     captcha: res,
     isLoading,
@@ -48,24 +48,24 @@ export const useLogin = () => {
     onError: (error, variables, context) => {
       // Handle the error and possibly roll back optimistic updates
       console.error('Error occurred:', error.message);
-      console.log('Rolling back optimistic update with context:', context);
+      //console.log('Rolling back optimistic update with context:', context);
       // Perform rollback logic here if necessary
     },
     onSuccess: (data, variables, context) => {
       // Handle the successful mutation
       localStorage.setItem('jwt', data.token);
       Cookies.set('jwt', data.token);
-      console.log('Login successful', data);
+      //console.log('Login successful', data);
     },
-    onSettled: (data, error, variables, context) => {
-      // This will be called regardless of success or error
-      if (error) {
-        console.error('Mutation failed:', error.message);
-      } else {
-        console.log('Mutation settled successfully');
-      }
-      // Cleanup or additional actions can be done here
-    },
+    // onSettled: (data, error, variables, context) => {
+    //   // This will be called regardless of success or error
+    //   if (error) {
+    //     console.error('Mutation failed:', error.message);
+    //   } else {
+    //     console.log('Mutation settled successfully');
+    //   }
+    //   // Cleanup or additional actions can be done here
+    // },
   });
 
   return mutation;
