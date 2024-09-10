@@ -16,10 +16,11 @@ export enum PaymentStatus {
   }
 
   export enum InvoiceStatus {
-    NEW = "Hóa đơn mới",
-    CASH = 'Hóa đơn thay thế',
-    CREDIT_CARD = 'Hóa đơn điều chỉnh',
-    BANK_TRANSFER = 'Hóa đơn đã bị thay thế',
-    NK_TRANSFER = 'Hóa đơn đã bị điều chỉnh',
-    OTHER = 'Hóa đơn đã bị hủy',
-  }
+    NEW = "Hóa đơn mới",                // New Invoice
+    CASH = 'Hóa đơn tiền mặt',          // Cash Invoice
+    CREDIT_CARD = 'Hóa đơn thẻ tín dụng',// Credit Card Invoice
+    BANK_TRANSFER = 'Hóa đơn chuyển khoản', // Bank Transfer Invoice
+    REPLACED = 'Hóa đơn đã bị thay thế', // Replaced Invoice
+    ADJUSTED = 'Hóa đơn đã điều chỉnh', // Adjusted Invoice
+    CANCELED = 'Hóa đơn đã hủy',        // Canceled Invoice
+  }  
