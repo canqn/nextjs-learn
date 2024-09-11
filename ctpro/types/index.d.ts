@@ -279,3 +279,21 @@ export interface UserChangePasswordOptions {
 export interface UserRefreshTokenOptions {
   token: string;
 }
+
+export type ApiResInvoice<T> = {
+  state: string;
+  datas: T;
+  time: string;
+  total: number;
+};
+
+export interface InvoiceSearchOptions {
+  sort: string; // Thứ tự sắp xếp kết quả, ví dụ: "tdlap:desc,khmshdon:asc,shdon:desc"
+  size: number; // Số lượng kết quả trả về
+  search: {
+    tdlap_ge: string; // Thời gian lập hóa đơn từ (ge: greater than or equal), định dạng: dd/MM/yyyyTHH:mm:ss
+    tdlap_le: string; // Thời gian lập hóa đơn đến (le: less than or equal), định dạng: dd/MM/yyyyTHH:mm:ss
+    tthai: string; // Trạng thái hóa đơn, ví dụ: "1" cho hóa đơn mới
+    ttxly: string; // Kết quả kiểm tra hóa đơn, ví dụ: "8" cho TCT đã nhận mã HĐ khởi tạo từ máy tính tiền
+  };
+}

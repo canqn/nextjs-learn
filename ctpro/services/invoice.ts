@@ -2,19 +2,12 @@
 import { useMutation, UseMutationResult, useQuery } from '@tanstack/react-query';
 import { API_ENDPOINTS } from './rest/api-endpoint';
 import client from './rest';
-import { IAuthenticatedInvoice, ICaptcha, IUserLoginInvoiceOptions } from '@/types';
+import { ApiResInvoice, DataInvoice, IAuthenticatedInvoice, ICaptcha, IInvoiceSearchOptions, InvoiceSearchOptions, IUserLoginInvoiceOptions } from '@/types';
 import Cookies from 'js-cookie'
 import invoiceInstance from './rest/invoice-client';
 import axios from 'axios';
 import { useState } from 'react';
 
-const fetchPosts = async (): Promise<ICaptcha> => {
-  const response = await axios.get(
-    'https://hoadondientu.gdt.gov.vn:30000/captcha'
-  );
-  const data = await response.data;
-  return data;
-};
 export const useCaptcha = ({ isLoggedIn }: { isLoggedIn: boolean }) => {
   const { data: res, isLoading, isFetching, error,refetch } = useQuery({
     queryKey: [API_ENDPOINTS.GET_CAPTCHA],
@@ -30,6 +23,14 @@ export const useCaptcha = ({ isLoggedIn }: { isLoggedIn: boolean }) => {
     refetch
   };
 };
+
+export const useSearchSold = (options: InvoiceSearchOptions) => {
+  const { data, isLoading, error,refetch } = useQuery({
+    queryKey: [API_ENDPOINTS.SEARCH_INVOICE_SOLD, options],
+    queryFn: () => client.invoice.searchSold(options),
+  });
+  return { data, isLoading, error,refetch };
+}
 
 const login = async (loginData: IUserLoginInvoiceOptions): Promise<IAuthenticatedInvoice> => {
   const response = await axios.post<IAuthenticatedInvoice>('/api/login', loginData);

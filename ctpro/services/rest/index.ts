@@ -1,4 +1,4 @@
-import { ApiResponse, ITipyPost, ICaptcha, ILoginInvoice, IAuthenticatedInvoice, IUserLoginInvoiceOptions, IAuthenticatedUser, UserLoginOptions, UserQueryOptions, IUser, IUserProfile, UserChangePasswordOptions, UserRegisterOptions, UserRefreshTokenOptions } from '@/types';
+import { ApiResponse, ITipyPost, ICaptcha, ILoginInvoice, IAuthenticatedInvoice, IUserLoginInvoiceOptions, IAuthenticatedUser, UserLoginOptions, UserQueryOptions, IUser, IUserProfile, UserChangePasswordOptions, UserRegisterOptions, UserRefreshTokenOptions, IInvoiceSearchOptions } from '@/types';
 import { HttpClient } from './http-client';
 import { API_ENDPOINTS } from './api-endpoint';
 import axios from 'axios';
@@ -64,7 +64,7 @@ class Client {
   invoice = {
     getCaptcha: async () => {
       const res = await InvoiceClient.get<ICaptcha>(API_ENDPOINTS.GET_CAPTCHA);
-      return res; // Trả về kết quả từ InvoiceClient.get
+      return res;
     },
 
     login: async(options: IUserLoginInvoiceOptions) => {
@@ -73,8 +73,19 @@ class Client {
       })
       return data;
     },
+
     loginUser: async (options: IUserLoginInvoiceOptions)=> {
       const response = await InvoiceClient.post(API_ENDPOINTS.LOGIN_INVOICE, options);
+      return response;
+    },
+
+    searchSold: async (options: IInvoiceSearchOptions) => {
+      const response = await InvoiceClient.post(API_ENDPOINTS.SEARCH_INVOICE_SOLD, options);
+      return response;
+    },
+
+    searchPurchase: async (options: IInvoiceSearchOptions) => {
+      const response = await InvoiceClient.post(API_ENDPOINTS.SEARCH_INVOICE_PURCHASE, options);
       return response;
     }
   };
